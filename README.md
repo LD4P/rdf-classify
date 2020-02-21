@@ -1,3 +1,5 @@
+![Python package](https://github.com/LD4P/rdf-classify/workflows/Python%20package/badge.svg)
+
 # Sinopia RDF Classification
 Source code and data repository for a [Tensorflow][TF] project that builds
 various models for classifying the Sinopia resource template from an incoming RDF graph
@@ -6,7 +8,7 @@ of an entity.
 The **problem** this project attempts to solve is to replace the manually classification that
 is now required in Sinopia when importing third-party RDF from sources such as the Library of
 Congress [Works][LOC_WORKS] and [Instances][LOC_INSTANCES], [Wikidata][WIKIDATA], or
-of the Sinopia's cohort converted Share-VDE MARC-to-BIBFRAME RDF.
+the Sinopia cohort's converted Share-VDE MARC-to-BIBFRAME RDF.
 
 Open source under the [Apache 2 license](https://www.apache.org/licenses/LICENSE-2.0.txt).
 Models and data are made available under the Open Database License: http://opendatacommons.org/licenses/odbl/1.0/.
@@ -22,8 +24,8 @@ entities based on rules specified in one or more resource templates.
 
 ## Predicting RDF's Resource Template with TensorFlow
 
-[LOC_INSTANCES]: http://id.loc.gov/
-[LOC_WORKS]: http://id.loc.gov/
+[LOC_INSTANCES]: http://id.loc.gov/ontologies/bibframe.html#c_Instance/
+[LOC_WORKS]: http://id.loc.gov/ontologies/bibframe.html#c_Work
 [SINOPIA]: https://sinopia.io/
 [SINOPIA_DEV]: https://development.sinopia.io/
 [SINOPIA_STAGE]: https://stage.sinopia.io/

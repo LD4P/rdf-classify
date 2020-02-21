@@ -26,7 +26,7 @@ def uri_to_matrix(uri: str) -> list:
     return matrix
 
 
-def to_series(graph: rdflib.ConjectiveGraph):
+def to_series(graph: rdflib.ConjunctiveGraph):
     for row in graph.query(RT_SUBJECTS):
         subject = (row[0])
         rt_key = str(row[1])
