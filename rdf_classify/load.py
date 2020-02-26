@@ -1,6 +1,7 @@
 """Loads RDF into Pandas and Tensorflow"""
 
 import rdflib  # type: ignore
+import tensorflow.keras as keras
 from typing import Any, Dict
 
 # Module constants
@@ -8,7 +9,12 @@ CLASSES: Dict[Any, Any] = {}
 SINOPIA = rdflib.Namespace("http://sinopia.io/vocabulary/")
 # For now restrictive subset, need to look at the full Unicode
 VALID_URL = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~:/?#[]@!$&'()*+,;="  # noqa: E501
+# from https://serpstat.com/blog/how-long-should-be-the-page-url-length-for-seo/
+MAXLEN = 2048
 
+def uri_to_hash(uri: str, maxlen: int=MAXLEN) -> str:
+   uri_hash = keras.preprocessing.text.hashing_trick(uri, maxlen)
+   return uri_hash
 
 def uri_to_matrix(uri: str) -> list:
     matrix = []

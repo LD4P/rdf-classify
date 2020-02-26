@@ -30,3 +30,4 @@ def from_zipfile(zip_filepath: str, exclude: list = []) -> list:
                     print(f"Failed to parse {zip_info.filename}")
                     continue
     return graphs
+
