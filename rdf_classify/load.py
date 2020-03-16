@@ -1,5 +1,6 @@
 """Loads RDF into Pandas and Tensorflow"""
 
+import numpy as np  # type: ignore
 import rdflib  # type: ignore
 import tensorflow.keras as keras  # type: ignore
 from typing import Any, Dict
@@ -14,7 +15,7 @@ MAXLEN = 2048
 
 
 def uri_to_hash(uri: str, maxlen: int = MAXLEN) -> str:
-    uri_hash = keras.preprocessing.text.hashing_trick(uri, maxlen)
+    uri_hash = keras.preprocessing.text.hashing_trick(uri, maxlen, hash_function="md5")
     return uri_hash
 
 
@@ -24,19 +25,15 @@ def uri_to_matrix(uri: str) -> list:
         position = VALID_URL.find(char)
         if position < 0:
             continue  # Ignore for now
-        vector = []
-        for i in range(0, len(VALID_URL)):
-            if i == position:
-                vector.append(1.0)
-            else:
-                vector.append(0.0)
+        vector = np.zeros(len(VALID_URL))
+        vector[position] = 1.0
         matrix.append(vector)
     return matrix
 
 
 def to_series(graph: rdflib.ConjunctiveGraph):
     for row in graph.query(RT_SUBJECTS):
-        subject = (row[0])
+        subject = str(row[0])
         rt_key = str(row[1])
         if rt_key not in CLASSES:
             CLASSES[rt_key] = {subject: []}

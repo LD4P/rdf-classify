@@ -5,7 +5,7 @@ import rdflib  # type: ignore
 from zipfile import ZipFile
 
 
-def from_zipfile(zip_filepath: str, exclude: list = []) -> list:
+def from_zipfile(zip_filepath: str, exclude: list = [str]) -> list:
     """Takes a zip filepath, extracts Sinopia RDF files, loading each JSON-LD
     into a rdflib.ConjunctionGraph, returns a list of these graphs.
 
@@ -18,13 +18,13 @@ def from_zipfile(zip_filepath: str, exclude: list = []) -> list:
         for zip_info in zip_file.infolist():
             if zip_info.file_size < 1:
                 continue
-            if zip_info.filename.split('/')[1] in exclude:
+            if zip_info.filename.split("/")[1] in exclude:
                 continue
             with zip_file.open(zip_info) as zip_extract:
                 graph = rdflib.ConjunctiveGraph()
                 raw_rdf = zip_extract.read()
                 try:
-                    graph.parse(data=raw_rdf, format='json-ld')
+                    graph.parse(data=raw_rdf, format="json-ld")
                     graphs.append(graph)
                 except json.JSONDecodeError:
                     print(f"Failed to parse {zip_info.filename}")
