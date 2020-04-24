@@ -1,9 +1,28 @@
 """Extracts serialized RDF and loads into one or more graphs"""
 
 import json
-import rdflib  # type: ignore
+from typing import List
 from zipfile import ZipFile
 
+import pandas as pd
+import rdflib  # type: ignore
+
+
+def to_dataframe(graphs: List[rdflib.Graph]) -> pd.DataFrame: 
+    resource_templates = {}
+    for graph in graphs:
+        rt_query = graph.query(SUBJ_RT)
+        for row in rt_query:
+            subject, rt_key = str(row[0]), str(row[1]) # Ugly
+             if not rt_key in resource_templates:
+                resource_templates[rt_key] = {}
+            for predicate in graph.predicates(subject=row[0]):
+                pred_key = str(predicate)
+                if pred_key in resource_templates[rt_key]:
+                    resource_templates[rt_key][pred_key] += 1
+                else:
+                    resource_templates[rt_key][pred_key] = 1
+    series = pandas.Dataframe(data=resource_templates)
 
 def from_zipfile(zip_filepath: str, exclude: list = [str]) -> list:
     """Takes a zip filepath, extracts Sinopia RDF files, loading each JSON-LD
@@ -30,3 +49,6 @@ def from_zipfile(zip_filepath: str, exclude: list = [str]) -> list:
                     print(f"Failed to parse {zip_info.filename}")
                     continue
     return graphs
+
+SUBJ_RT = """SELECT ?subj ?resource_template 
+WHERE { ?subj <http://sinopia.io/vocabulary/hasResourceTemplate> ?resource_template }"""
