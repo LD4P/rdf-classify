@@ -1,7 +1,7 @@
 """Loads RDF into Pandas and Tensorflow"""
 
 from typing import Any, Dict
-
+import pandas as pd
 import numpy as np  # type: ignore
 import rdflib  # type: ignore
 import tensorflow.keras as keras  # type: ignore
