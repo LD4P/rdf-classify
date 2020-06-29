@@ -1,12 +1,13 @@
 """FastAI extended data_block"""
 
 import pandas as pd  # type: ignore
-from fastai.tabular import Categorify, DataBunch, TabularList # type: ignore
- 
+from fastai.tabular import Categorify, DataBunch, TabularList  # type: ignore
 
-def databunch(df: pd.DataFrame, dependent_var: str='resource_template') -> DataBunch:
-    # Using resource_template is what we're trying to predict
-    category_names = ['subject']
+
+def databunch(df: pd.DataFrame,
+              dependent_var: str = 'resource_template') -> DataBunch:
+    # Resource_template is what we're trying to predict
+    category_names = ['subject', 'group']
     procedures = [Categorify]
     # All predicates in graph
     continous_names = list(df.keys())[3:]
@@ -24,7 +25,3 @@ def databunch(df: pd.DataFrame, dependent_var: str='resource_template') -> DataB
                        .label_from_df(cols=dependent_var)
                        .add_test(test)
                        .databunch())
-                       
-
- 
-
