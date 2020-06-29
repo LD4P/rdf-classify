@@ -1,6 +1,6 @@
-import rdflib
+import rdflib  # type: ignore
+import responses  # type: ignore
 import unittest
-from unittest import mock
 from src import data_loader
 
 
@@ -14,23 +14,22 @@ class TestCreateTensor(unittest.TestCase):
 
     def test_empty_graph(self):
         empty_graph = rdflib.Graph()
-        self.assertEqual(data_loader.create_tensor(empty_graph), [])
-
-
-def mocked_ld4p_get(url):
-
-    def text():
-        return
-
-    if url.startswith('https://trellis.sinopia.io/repository/ld4p'):
-        return
+        self.assertEqual(data_loader.create_tensor(empty_graph, 'pcc'), [])
 
 
 class TestPredicateColumns(unittest.TestCase):
 
-    @mock.patch('data_loader.predicate_columns.requests.get',
-                side_effect=mocked_ld4p_get)
-    def test_predicate_columns(self):
+    def setUp(self):
+        self.TRELLIS_URI = 'https://trellis.sinopia.io/repository/ld4p'
+
+    @responses.activate
+    def test_default_predicate_columns(self):
+        responses.add(responses.GET,
+                      self.TRELLIS_URI,
+                      body="",
+                      content_type="text/turtle",
+                      status=200)
         properties = data_loader.predicate_columns(
-            'https://trellis.sinopia.io/repository/ld4p')
-        self.assertEqual(len(properties), 5)
+            self.TRELLIS_URI)
+        self.assertEqual(len(properties), 3)
+        self.assertEqual(properties, ['subject', 'resource_template', 'group'])

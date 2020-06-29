@@ -22,5 +22,6 @@ pyzmq==18.1.1
 rdflib>=4.2.2
 rdflib-jsonld==0.4.0
 requests>=2.22.0
+responses
 tensorboard>=2.0.2
 tensorflow>=2.0.0
