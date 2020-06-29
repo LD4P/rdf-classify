@@ -1,6 +1,6 @@
 __author__ = "Jeremy Nelson"
 
-from rdf_classify import load
+from src import load
 
 
 class TestLoad:
