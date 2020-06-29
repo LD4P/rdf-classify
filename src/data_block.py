@@ -6,7 +6,7 @@ from fastai.tabular import Categorify, DataBunch, TabularList # type: ignore
 
 def databunch(df: pd.DataFrame, dependent_var: str='resource_template') -> DataBunch:
     # Using resource_template is what we're trying to predict
-    category_names = ['subject']
+    category_names = ['subject', 'group']
     procedures = [Categorify]
     # All predicates in graph
     continous_names = list(df.keys())[3:]
