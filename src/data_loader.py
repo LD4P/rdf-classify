@@ -58,8 +58,8 @@ def process_predicates(subject_key: str,
 def to_dataframe(graphs: List[dict], rt_url: str) -> pd.DataFrame:
     """Function takes a list of RDF graphs and a Trellis URL pointing the resource
     templates location
-    
-    @param graphs -- List of dictionaries with graph and group keys 
+
+    @param graphs -- List of dictionaries with graph and group keys
     @param rt_url -- Trellis URL to environment's resource templates"""
     start = datetime.utcnow()
     print(f"Starting convert {len(graphs)} to dataframe at {start}")
@@ -74,8 +74,12 @@ def to_dataframe(graphs: List[dict], rt_url: str) -> pd.DataFrame:
         subjects = create_tensor(graph, row['group'])
         raw_data.extend(subjects)
     end = datetime.utcnow()
-    df = pd.DataFrame(data=raw_data, columns=predicate_cols).fillna(0).sample(frac=1).reset_index(drop=True)
-    print(f"Finished at {end} total time {(end-start).seconds / 60.} minutes for dataframe, size {len(df)}")
+    df = pd.DataFrame(data=raw_data,
+                      columns=predicate_cols)
+    df.fillna(0).sample(frac=1).reset_index(drop=True)
+    print(f"""
+    Finished at {end} time {(end-start).seconds / 60.} minutes for dataframe,
+    size {len(df)}""")
     return df
 
 
@@ -98,7 +102,8 @@ def from_zipfile(zip_filepath: str) -> List:
                 graph = rdflib.ConjunctiveGraph()
                 try:
                     graph.parse(data=raw_data, format="json-ld")
-                    graph.skolemize(authority=f"https://{graph.identifier}.sinopia.io/")
+                    graph.skolemize(
+                        authority=f"https://{graph.identifier}.sinopia.io/")
                     graphs.append({"group": group, "graph": graph})
                 except json.JSONDecodeError:
                     print(f"Failed to parse {zip_info.filename}")

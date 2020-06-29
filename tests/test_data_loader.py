@@ -17,7 +17,6 @@ class TestCreateTensor(unittest.TestCase):
         self.assertEqual(data_loader.create_tensor(empty_graph), [])
 
 
-
 def mocked_ld4p_get(url):
 
     def text():
@@ -26,9 +25,12 @@ def mocked_ld4p_get(url):
     if url.startswith('https://trellis.sinopia.io/repository/ld4p'):
         return
 
+
 class TestPredicateColumns(unittest.TestCase):
 
-    @mock.patch('data_loader.predicate_columns.requests.get', side_effect=mocked_ld4p_get)
+    @mock.patch('data_loader.predicate_columns.requests.get',
+                side_effect=mocked_ld4p_get)
     def test_predicate_columns(self):
-        properties = data_loader.predicate_columns('https://trellis.sinopia.io/repository/ld4p')
+        properties = data_loader.predicate_columns(
+            'https://trellis.sinopia.io/repository/ld4p')
         self.assertEqual(len(properties), 5)
