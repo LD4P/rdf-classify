@@ -1,6 +1,7 @@
 import unittest
 from src import data_bunch
 
+
 class TestDataBunch(unittest.TestCase):
 
     def setUp(self):
