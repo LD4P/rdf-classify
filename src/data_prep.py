@@ -1,4 +1,5 @@
-"""FastAI extended data_block"""
+"""Data preparation helper module for converting a RDF Panda DataFrame to
+FastAI TabularList"""
 
 import pandas as pd  # type: ignore
 from fastai.tabular import Categorify, DataBunch, TabularList  # type: ignore
