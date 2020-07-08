@@ -76,7 +76,7 @@ def to_dataframe(graphs: List[dict], rt_url: str) -> pd.DataFrame:
     end = datetime.utcnow()
     df = pd.DataFrame(data=raw_data,
                       columns=predicate_cols)
-    df.fillna(0).sample(frac=1).reset_index(drop=True)
+    df = df.fillna(0).sample(frac=1).reset_index(drop=True)
     print(f"""
     Finished at {end} time {(end-start).seconds / 60.} minutes for dataframe,
     size {len(df)}""")
