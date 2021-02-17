@@ -17,11 +17,6 @@ Models and data are made available under the Open Database License: http://opend
 Any rights in individual contents of the database are licensed under the Database
 Contents License: http://opendatacommons.org/licenses/dbcl/1.0/
 
-## Older Tensorflow code and documentation
-The first iteration of this project attempted to use [TensorFlow][TF]. This
-work is availabled in the [`with-tensoflow`](https://github.com/LD4P/rdf-classify/tree/with-tensorflow) branch.
-
-
 [LOC_INSTANCES]: http://id.loc.gov/ontologies/bibframe.html#c_Instance/
 [LOC_WORKS]: http://id.loc.gov/ontologies/bibframe.html#c_Work
 [SINOPIA]: https://sinopia.io/
